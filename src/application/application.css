@@ -1,10 +1,21 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+/*登陆logo */
+.logo{
+	-fx-text-fill: white;
+	-fx-font-size: 18;
+}
+
+/**登陆按钮 */
 .login-button{
-	-fx-background-color: rgb(2,184,250);
+	-fx-background-color: rgba(2,184,250,0.8);
 	-fx-background-radius: 3; 
 	-fx-font-family: "微软雅黑"; 
 	-fx-font-size: 16; 
 	-fx-text-fill: white;
+	-fx-cursor: hand;
+}
+.login-button:hover{
+	-fx-background-color: rgba(2,184,250,1);
 }
 
 .minimizeWindow:hover{

@@ -7,6 +7,7 @@ import javafx.stage.StageStyle;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,6 +47,7 @@ public class Login extends Application {
 			
 			//顶部logo
 			Label logo = new Label("QQ");
+			logo.getStyleClass().add("logo");
 			StackPane.setMargin(logo, new Insets(-75, 310, 0, 0));
 			
 			//最小化按钮
@@ -93,9 +95,9 @@ public class Login extends Application {
 			
 			Label pwdLabel = new Label("密码：");
 			pwdLabel.setPrefSize(40, 40);
-			TextField password = new TextField();
+			PasswordField password = new PasswordField();
 			password.setPrefSize(280, 40);
-			password.setPromptText("账号");
+			password.setPromptText("密码");
 			
 			pwdBox.getChildren().addAll(pwdLabel,password);
 			VBox.setMargin(pwdBox, new Insets(15, 50, 0, 50));
