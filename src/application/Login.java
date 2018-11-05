@@ -119,14 +119,16 @@ public class Login extends Application {
 			HBox regBox = new HBox();
 			regBox.setPrefSize(200, 30);
 			
-			Label regBtn = new Label("注册账号");
-			HBox.setMargin(regBtn, new Insets(8, 0, 0, 15));
+			Button regBtn = new Button("注册账号");
+			regBtn.getStyleClass().add("reg");
+			regBtn.setPrefSize(70, 30);
+			HBox.setMargin(regBtn, new Insets(0, 0, 0, 6));
 			
 			ImageView erweima = new ImageView(new Image("/application/res/icon_erweima.png"));
 			erweima.setFitHeight(30);
 			erweima.setFitWidth(30);
 			regBox.getChildren().addAll(regBtn,erweima);
-			HBox.setMargin(erweima, new Insets(-5, 0, 0, 325));
+			HBox.setMargin(erweima, new Insets(-5, 0, 0, 315));
 			
 			vb.getChildren().addAll(stack,nameBox,pwdBox,loginBox,regBox);
 			

@@ -5,6 +5,15 @@
 	-fx-font-size: 18;
 }
 
+/*注册 */
+.reg{
+	-fx-background-color: rgba(0,0,0,0);
+	-fx-text-fill: #999;
+	-fx-cursor: hand;
+}
+.reg:hover{
+	-fx-text-fill: #333;
+}
 /**登陆按钮 */
 .login-button{
 	-fx-background-color: rgba(2,184,250,0.8);
