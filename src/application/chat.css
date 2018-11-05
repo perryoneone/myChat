@@ -1,0 +1,40 @@
+.top-window{
+    -fx-background-color: linear-gradient(to right,rgb(76,139,255),rgb(32,209,255));
+}
+
+/* 最小化按钮*/
+#minimizeWindow{
+    -fx-background-image: url("/application/res/min.png");
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-background-size: 15px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 5px 5px;
+}
+
+#minimizeWindow:hover{
+	-fx-background-color: rgba(255,0,0,0.3);
+}
+
+/*关闭按钮 */
+#closeWindow{
+	-fx-background-image: url("/application/res/close.png");
+	-fx-background-color: rgba(0,0,0,0);
+	-fx-background-size: 15px;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: 5px 5px;
+}
+#closeWindow:hover{
+	-fx-background-color: rgba(255,0,0,0.7);
+}
+
+/* 用户名*/
+.userName{
+    -fx-text-fill: white;
+    -fx-font-size:18;
+    -fx-font-weight:bold;
+}
+
+/* 搜索框*/
+.search{
+    -fx-text-fill: black;
+}

@@ -112,6 +112,17 @@ public class Login extends Application {
 			loginBtn.getStyleClass().add("login-button");
 			
 			loginBox.getChildren().add(loginBtn);
+			/**
+			 * 登陆点击事件处理
+			 *
+			 */
+			/*loginBtn.setOnAction(event -> {
+				try {
+					new doLogin(primaryStage);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			});*/
 			HBox.setMargin(loginBtn, new Insets(0, 0, 0, 50));
 			VBox.setMargin(loginBox, new Insets(20, 50, 0, 50));
 			
@@ -133,7 +144,7 @@ public class Login extends Application {
 			vb.getChildren().addAll(stack,nameBox,pwdBox,loginBox,regBox);
 			
 	        Scene scene = new Scene(root, 430, 330);
-	        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+	        scene.getStylesheets().add(getClass().getResource("login.css").toExternalForm());
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 		} catch(Exception e) {
