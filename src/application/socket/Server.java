@@ -35,8 +35,14 @@ public class Server {
 		}	
 	}
 	
-	public void stop() throws IOException {
-		server.close();
+	public void stop(){
+		try {
+			server.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		all.clear();
 		System.out.println("服务器已关闭。。。");
 	}
 	
