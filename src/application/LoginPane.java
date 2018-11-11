@@ -4,12 +4,11 @@ package application;
  * 登陆界面布局容器
  */
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -17,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import application.utils.Toast;
 
 public class LoginPane extends Pane{
 	Stage stage;
@@ -81,6 +81,7 @@ public class LoginPane extends Pane{
 		TextField userName = new TextField();
 		userName.setPrefSize(280, 40);
 		userName.setPromptText("账号");
+		userName.setTooltip(new Tooltip("请输入账号"));
 		
 		nameBox.getChildren().addAll(nameLabel,userName);
 		VBox.setMargin(nameBox, new Insets(20, 50, 0, 50));
@@ -94,7 +95,7 @@ public class LoginPane extends Pane{
 		PasswordField password = new PasswordField();
 		password.setPrefSize(280, 40);
 		password.setPromptText("密码");
-		
+		password.setTooltip(new Tooltip("请输入密码"));
 		pwdBox.getChildren().addAll(pwdLabel,password);
 		VBox.setMargin(pwdBox, new Insets(15, 50, 0, 50));
 		
@@ -113,19 +114,15 @@ public class LoginPane extends Pane{
 		 *
 		 */
 		loginBtn.setOnAction(event -> {
-			Alert warning;
-			System.out.println(userName.getText());
-			System.out.println(password.getText());
+			Toast toastr = new Toast(loginBtn.getScene().getWindow());
 			try {
-				if(userName.getText() == "" || !userName.getText().equals(null)) {
-					warning = new Alert(AlertType.WARNING);
-					warning.setHeaderText("用户名不能为空！");
-					warning.showAndWait();
+				if(userName.getText().equals("")) {
+					Toast.Level level = Toast.Level.values()[1];
+					toastr.show(level, 1000, "账号不能为空!");
 					
-				}else if(password.getText() == "" || !password.getText().equals(null)) {
-					warning = new Alert(AlertType.WARNING);
-					warning.setHeaderText("密码不能为空！");
-					warning.showAndWait();
+				}else if(password.getText().equals("")) {
+					Toast.Level level = Toast.Level.values()[1];
+					toastr.show(level, 1000, "密码不能为空!");
 				}else {
 					new doLogin((Stage)loginBtn.getScene().getWindow(),userName.getText(),password.getText());
 				}
