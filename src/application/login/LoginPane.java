@@ -128,7 +128,7 @@ public class LoginPane extends Pane{
 					Toast.Level level = Toast.Level.values()[1];
 					toastr.show(level, 1000, "密码不能为空!");
 				}else {
-					new doLogin((Stage)loginBtn.getScene().getWindow(),userName.getText(),password.getText());
+					new HandleLogin((Stage)loginBtn.getScene().getWindow(),userName.getText(),password.getText());
 				}
 				
 			} catch (Exception e) {

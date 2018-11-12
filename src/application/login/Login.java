@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 public class Login extends Application {
+	Stage stage;
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -28,4 +29,8 @@ public class Login extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	public void  showLogin() throws Exception {
+        start(stage);
+    }
 }

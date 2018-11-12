@@ -1,4 +1,13 @@
 package application.register;
+/**
+ * 注册界面布局容器
+ */
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import application.login.Login;
+import application.model.User;
+import application.utils.Toast;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -10,9 +19,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
-/**
- * 注册界面布局容器
- */
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -122,11 +128,13 @@ public class RegisterPane extends VBox{
 	    RadioButton button1 = new RadioButton("男");
 	    button1.setFont(new Font(14));
 	    button1.setToggleGroup(group);
+	    button1.setUserData("男");
 	    button1.setSelected(true);
 	    HBox.setMargin(button1, new Insets(15, 0, 0, 30));
 	    RadioButton button2 = new RadioButton("女");
 	    button2.setToggleGroup(group);
 	    button2.setFont(new Font(14));
+	    button2.setUserData("女");
 	    HBox.setMargin(button2, new Insets(15, 0, 0, 50));
 		
 		box4.getChildren().addAll(label4, button1, button2);
@@ -146,6 +154,7 @@ public class RegisterPane extends VBox{
 		
 		DatePicker birthday = new DatePicker();
 		birthday.setPrefSize(250, 35);
+		birthday.setValue(LocalDate.now());
 		HBox.setMargin(birthday, new Insets(8, 0, 0, 10));
 		
 		box5.getChildren().addAll(label5, birthday);
@@ -181,6 +190,20 @@ public class RegisterPane extends VBox{
 		cancel.setStyle("-fx-background-color: rgb(6,105,178);-fx-text-fill: white;");
 		cancel.setFont(new Font(14));
 		cancel.setCursor(Cursor.HAND);
+		/**
+		 * 取消事件处理
+		 */
+		cancel.setOnAction((e) -> {
+			Stage stage = (Stage)cancel.getScene().getWindow();
+			stage.close();
+			Login login = new Login();
+			try {
+				login.showLogin();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		HBox.setMargin(cancel, new Insets(5, 0, 0, 40));
 		
 		
@@ -190,6 +213,56 @@ public class RegisterPane extends VBox{
 		register.setStyle("-fx-background-color: rgb(6,105,178);-fx-text-fill: white;");
 		register.setFont(new Font(14));
 		register.setCursor(Cursor.HAND);
+		
+		/**
+		 * 登陆点击事件处理
+		 *
+		 */
+		register.setOnAction(event -> {
+			Toast toastr = new Toast(register.getScene().getWindow());
+			try {
+				String nickname = name.getText();
+				String password = pwd.getText();
+				String confirmPassword = confirmPwd.getText();
+				String sex = (String)group.getSelectedToggle().getUserData();
+				String birth = birthday.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				String addr = address.getText();
+				if(nickname.equals("")) {
+					Toast.Level level = Toast.Level.values()[1];
+					toastr.show(level, 1000, "昵称不能为空!");
+					name.setFocusTraversable(true);
+				}else if(password.equals("")) {
+					Toast.Level level = Toast.Level.values()[1];
+					toastr.show(level, 1000, "密码不能为空!");
+					pwd.setFocusTraversable(true);
+				}else if(confirmPassword.equals("")) {
+					Toast.Level level = Toast.Level.values()[1];
+					toastr.show(level, 1000, "请再次确认密码!");
+					confirmPwd.setFocusTraversable(true);
+				}else if(addr.equals("")) {
+					Toast.Level level = Toast.Level.values()[1];
+					toastr.show(level, 1000, "居住地不能为空!");
+					address.setFocusTraversable(true);
+				}else if(!password.equals(confirmPassword)) {
+					Toast.Level level = Toast.Level.values()[1];
+					toastr.show(level, 1000, "两次密码不一致!");
+					pwd.setFocusTraversable(true);
+				}else {
+					User user = new User();
+					user.setNickname(nickname);
+					user.setPwd(password);
+					user.setSex(sex);
+					user.setBirthday(birth);
+					user.setAddress(addr);
+					System.out.println(nickname+"-"+sex);
+					new HandleRegister((Stage)register.getScene().getWindow(),user);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+		
 		HBox.setMargin(register, new Insets(5, 0, 0, 170));
 		
 		box7.getChildren().addAll(cancel, register);

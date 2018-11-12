@@ -3,8 +3,8 @@ package application.login;
 import application.utils.Toast;
 import javafx.stage.Stage;
 
-public class doLogin {
-    public doLogin(Stage stage,String userName,String pwd) throws Exception {
+public class HandleLogin {
+    public HandleLogin(Stage stage,String userName,String pwd) throws Exception {
     	Toast toast = new Toast(stage);
     	if(true) {
     		Toast.Level level = Toast.Level.values()[0];
