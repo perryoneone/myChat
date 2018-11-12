@@ -1,4 +1,4 @@
-package application;
+package application.login;
 
 import application.utils.Toast;
 import javafx.stage.Stage;

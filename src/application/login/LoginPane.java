@@ -1,9 +1,10 @@
-package application;
+package application.login;
 
 /**
  * 登陆界面布局容器
  */
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -16,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import application.register.Register;
 import application.utils.Toast;
 
 public class LoginPane extends Pane{
@@ -48,6 +50,7 @@ public class LoginPane extends Pane{
 		Button minimizeWindow = new Button();
 		minimizeWindow.setPrefSize(30, 30);
 		minimizeWindow.setId("minimizeWindow");
+		minimizeWindow.setCursor(Cursor.HAND);
 		/**
 		 * 最小化按钮事件
 		 */
@@ -61,6 +64,7 @@ public class LoginPane extends Pane{
 		Button closeWindow = new Button();
 		closeWindow.setPrefSize(30, 30);
 		closeWindow.setId("closeWindow");
+		closeWindow.setCursor(Cursor.HAND);
 		/**
 		 * 关闭窗口按钮事件
 		 */
@@ -141,6 +145,20 @@ public class LoginPane extends Pane{
 		Button regBtn = new Button("注册账号");
 		regBtn.getStyleClass().add("reg");
 		regBtn.setPrefSize(70, 30);
+		regBtn.setCursor(Cursor.HAND);
+		/**
+		 * 注册按钮事件
+		 */
+		regBtn.setOnAction((e) -> {
+			try {
+				Stage stage = (Stage)regBtn.getScene().getWindow();
+				stage.close();
+				new Register().showRegister();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		HBox.setMargin(regBtn, new Insets(0, 0, 0, 6));
 		
 		ImageView erweima = new ImageView(new Image("/application/res/icon_erweima.png"));

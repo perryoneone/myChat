@@ -1,4 +1,4 @@
-package application;
+package application.login;
 /**
  * 主界面布局容器
  */

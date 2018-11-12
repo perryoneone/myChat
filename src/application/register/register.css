@@ -1,0 +1,13 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+/*关闭按钮 */
+#closeWindow{
+	-fx-background-image: url("/application/res/close.png");
+	-fx-background-color: rgba(0,0,0,0);
+	-fx-background-size: 15px;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: 8px 8px;
+}
+#closeWindow:hover{
+	-fx-background-color: rgba(255,0,0,0.7);
+}
