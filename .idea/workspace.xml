@@ -2,22 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="091318d4-fde8-47e1-bb79-ce3b6ea12328" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/myChat.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/application/Login.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/login/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/LoginPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/login/LoginPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/login/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/MainPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/login/MainPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/chat.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/login/chat.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/doLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/login/doLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/login/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/ServerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/ServerController2.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/ServerFrame.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/ServerFrame.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/ServerFrame2.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/ServerFrame2.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/ServerStart2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/login/LoginPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/login/LoginPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/login/doLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/login/HandleLogin.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,7 +17,7 @@
     <session id="1574136788">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.33" value="1" />
@@ -169,7 +156,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542025912450" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542027381090" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
@@ -243,7 +230,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="7" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19189766" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />

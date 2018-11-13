@@ -31,6 +31,18 @@
 	-fx-background-color: rgba(0,0,0,.5);
 }
 
+/*登陆设置按钮 */
+#setting{
+	-fx-background-image: url("/application/res/setting.png");
+	-fx-background-color: rgba(0,0,0,0);
+	-fx-background-size: 15px;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: 8px 8px;
+}
+#setting:hover{
+	-fx-background-color: rgba(255,0,0,0.3);
+}
+/*最小化窗口按钮 */
 #minimizeWindow{
 	-fx-background-image: url("/application/res/min.png");
 	-fx-background-color: rgba(0,0,0,0);

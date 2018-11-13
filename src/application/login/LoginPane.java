@@ -46,6 +46,20 @@ public class LoginPane extends Pane{
 		logo.getStyleClass().add("logo");
 		StackPane.setMargin(logo, new Insets(-75, 310, 0, 0));
 		
+		//登陆设置按钮
+		Button setting  = new Button();
+		setting.setPrefSize(30, 30);
+		setting.setId("setting");
+		setting.setCursor(Cursor.HAND);
+		StackPane.setMargin(setting, new Insets(-85, 0, 0, 270));
+		
+		/**
+		 * 登陆设置按钮事件
+		 */
+		setting.setOnAction((e) -> {
+			settingDialog(setting);
+		});
+		
 		//最小化按钮
 		Button minimizeWindow = new Button();
 		minimizeWindow.setPrefSize(30, 30);
@@ -74,7 +88,7 @@ public class LoginPane extends Pane{
 		});
 		StackPane.setMargin(closeWindow, new Insets(-85, 0, 0, 390));
 		
-		stack.getChildren().addAll(topBg,loginIcon,logo,minimizeWindow,closeWindow);
+		stack.getChildren().addAll(topBg,loginIcon,logo,setting,minimizeWindow,closeWindow);
 		
 		//账号输入框
 		HBox nameBox = new HBox();
@@ -123,10 +137,11 @@ public class LoginPane extends Pane{
 				if(userName.getText().equals("")) {
 					Toast.Level level = Toast.Level.values()[1];
 					toastr.show(level, 1000, "账号不能为空!");
-					
+					userName.requestFocus();
 				}else if(password.getText().equals("")) {
 					Toast.Level level = Toast.Level.values()[1];
 					toastr.show(level, 1000, "密码不能为空!");
+					password.requestFocus();
 				}else {
 					new HandleLogin((Stage)loginBtn.getScene().getWindow(),userName.getText(),password.getText());
 				}
@@ -151,8 +166,6 @@ public class LoginPane extends Pane{
 		 */
 		regBtn.setOnAction((e) -> {
 			try {
-				Stage stage = (Stage)regBtn.getScene().getWindow();
-				stage.close();
 				new Register().showRegister();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -168,5 +181,20 @@ public class LoginPane extends Pane{
 		HBox.setMargin(erweima, new Insets(-5, 0, 0, 315));
 		
 		vb.getChildren().addAll(stack,nameBox,pwdBox,loginBox,regBox);
+	}
+	/**
+	 * 登陆设置对话框
+	 */
+	private void settingDialog(Button btn)
+	{
+		SettingDialog dlg = new SettingDialog(btn);
+		
+		// dlg.exec() 返回true或false
+		if(dlg.exec())
+		{
+			String ipAddr = dlg.ipAddr.getText();
+			String port = dlg.port.getText();
+			System.out.println(ipAddr + port);
+		}
 	}
 }

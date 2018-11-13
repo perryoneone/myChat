@@ -1,7 +1,6 @@
 package application.register;
 
 import application.dao.UserDAO;
-import application.login.Login;
 import application.model.User;
 import application.utils.Toast;
 import javafx.stage.Stage;
@@ -19,9 +18,8 @@ public class HandleRegister {
 			
 			Toast.Level level = Toast.Level.values()[0];
 			toast.show(level, 1000, "注册成功!");
+			Thread.sleep(1000);
 			stage.close();
-			Login login = new Login();
-			login.showLogin();
 		}else {
 			//System.out.println("注册失败");
 			Toast.Level level = Toast.Level.values()[2];

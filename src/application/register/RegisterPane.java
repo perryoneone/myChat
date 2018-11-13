@@ -4,8 +4,6 @@ package application.register;
  */
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import application.login.Login;
 import application.model.User;
 import application.utils.Toast;
 import javafx.geometry.Insets;
@@ -196,13 +194,6 @@ public class RegisterPane extends VBox{
 		cancel.setOnAction((e) -> {
 			Stage stage = (Stage)cancel.getScene().getWindow();
 			stage.close();
-			Login login = new Login();
-			try {
-				login.showLogin();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 		});
 		HBox.setMargin(cancel, new Insets(5, 0, 0, 40));
 		
@@ -230,23 +221,23 @@ public class RegisterPane extends VBox{
 				if(nickname.equals("")) {
 					Toast.Level level = Toast.Level.values()[1];
 					toastr.show(level, 1000, "昵称不能为空!");
-					name.setFocusTraversable(true);
+					name.requestFocus();
 				}else if(password.equals("")) {
 					Toast.Level level = Toast.Level.values()[1];
 					toastr.show(level, 1000, "密码不能为空!");
-					pwd.setFocusTraversable(true);
+					pwd.requestFocus();
 				}else if(confirmPassword.equals("")) {
 					Toast.Level level = Toast.Level.values()[1];
 					toastr.show(level, 1000, "请再次确认密码!");
-					confirmPwd.setFocusTraversable(true);
+					confirmPwd.requestFocus();
 				}else if(addr.equals("")) {
 					Toast.Level level = Toast.Level.values()[1];
 					toastr.show(level, 1000, "居住地不能为空!");
-					address.setFocusTraversable(true);
+					address.requestFocus();
 				}else if(!password.equals(confirmPassword)) {
 					Toast.Level level = Toast.Level.values()[1];
 					toastr.show(level, 1000, "两次密码不一致!");
-					pwd.setFocusTraversable(true);
+					pwd.requestFocus();
 				}else {
 					User user = new User();
 					user.setNickname(nickname);
