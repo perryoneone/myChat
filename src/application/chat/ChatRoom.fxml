@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" style="-fx-border-radius: 0.8;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.chat.ChatController">
+   <children>
+      <HBox prefHeight="60.0" prefWidth="1300.0" style="-fx-background-color: rgb(51,122,183); -fx-border-radius: 0.8;">
+         <children>
+            <Label text="聊天室" textFill="#ffffffcc">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="20.0" top="15.0" />
+               </HBox.margin>
+            </Label>
+            <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeRoom" style="-fx-background-color: rgb(91,192,222);" text="退出" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="1160.0" top="12.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </HBox>
+      <HBox prefHeight="500.0" prefWidth="1300.0">
+         <children>
+            <StackPane prefHeight="500.0" prefWidth="900.0">
+               <children>
+                  <WebView fx:id="webView" prefHeight="200.0" prefWidth="200.0" />
+                  <TextArea fx:id="showMsg" prefHeight="500.0" prefWidth="900.0" style="-fx-border-color: lightblue;">
+                     <StackPane.margin>
+                        <Insets bottom="10.0" left="10.0" top="10.0" />
+                     </StackPane.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextArea>
+                  <Button mnemonicParsing="false" style="-fx-background-color: rgba(0,0,0,0);" text="查看历史消息" textFill="#1a29d0" StackPane.alignment="TOP_RIGHT">
+                     <StackPane.margin>
+                        <Insets right="10.0" top="20.0" />
+                     </StackPane.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </StackPane>
+            <VBox prefHeight="200.0" prefWidth="360.0" style="-fx-border-color: lightblue;">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="20.0" top="10.0" />
+               </HBox.margin>
+               <children>
+                  <HBox prefHeight="50.0" prefWidth="360.0">
+                     <children>
+                        <Label text="在线人数：">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" top="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="userNumber" text="1" textFill="RED">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" top="15.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <ListView fx:id="users" prefHeight="429.0" prefWidth="358.0" style="-fx-border-color: rgba(0,0,0,0);" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <StackPane prefHeight="240.0" prefWidth="1300.0">
+         <children>
+            <HTMLEditor fx:id="message" htmlText="" prefHeight="240.0" prefWidth="1300.0" />
+            <Button mnemonicParsing="false" onAction="#sendMsg" prefWidth="80.0" style="-fx-background-color: rgb(91,192,222);" text="发送" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
+               <StackPane.margin>
+                  <Insets bottom="10.0" right="20.0" />
+               </StackPane.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </StackPane>
+   </children>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
+</VBox>

@@ -1,5 +1,6 @@
 package application.login;
 
+import application.chat.ChatRoom;
 import application.utils.Toast;
 import javafx.stage.Stage;
 
@@ -11,8 +12,8 @@ public class HandleLogin {
 			toast.show(level, 1000, "登陆成功!");
     		stage.close();
             System.out.println(userName + " : " + pwd);
-            Main main = new Main();
-            main.showChat();
+            ChatRoom room = new ChatRoom();
+            room.showChat();
     	}
     }
 }

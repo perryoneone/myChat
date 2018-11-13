@@ -8,6 +8,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.HashMap;
+
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -32,6 +36,24 @@ public class ServerController {
 
 	@FXML
 	TextArea log;
+	
+	@FXML
+	public void unchange() {
+		log.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						log.setText(oldValue);
+					}
+				});
+			}
+		});
+	}
+	
 	@FXML
 	public void startServer() {
 		System.out.println("服务器启动中。。。");
@@ -237,5 +259,7 @@ public class ServerController {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 
 }
