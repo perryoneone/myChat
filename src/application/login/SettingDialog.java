@@ -99,7 +99,7 @@ public class SettingDialog extends StyleDialog
 	}
 	
 	private void initLayout()
-	{
+	{	
 		this.setDialogTitle("登陆设置");
 		
 		VBox root = new VBox();
@@ -117,10 +117,8 @@ public class SettingDialog extends StyleDialog
 		HBox.setMargin(label1, new Insets(15, 0, 0, 0));
 		
 		ipAddr.setPrefSize(250, 35);
-		if(ipAddr.getUserData() != null) {
-			ipAddr.setText(ipAddr.getUserData().toString());
-		}
 		
+		ipAddr.setText("127.0.0.1"); // 设置默认ip地址
 		HBox.setMargin(ipAddr, new Insets(8, 0, 0, 10));
 		box1.getChildren().addAll(label1, ipAddr);
 		
@@ -134,10 +132,8 @@ public class SettingDialog extends StyleDialog
 		HBox.setMargin(label2, new Insets(15, 0, 0, 0));
 		
 		port.setPrefSize(250, 35);
-		if(port.getUserData() != null) {
-			port.setText(port.getUserData().toString());
-		}
 		
+		port.setText("9999"); // 设置默认端口号
 		HBox.setMargin(port, new Insets(8, 0, 0, 10));
 		box2.getChildren().addAll(label2, port);
 		

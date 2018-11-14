@@ -158,7 +158,7 @@ public class ServerController {
 				try {
 					// 读取客户端发送的报文
 					String msg = dis.readUTF();
-					String[] parts = msg.split("#");
+					/*String[] parts = msg.split("#");
 					switch (parts[0]) {
 					// 处理登录报文
 					case "LOGIN":
@@ -212,7 +212,7 @@ public class ServerController {
 
 					default:
 						break;
-					}
+					}*/
 				} catch (IOException e) {
 					isConnected = false;
 					e.printStackTrace();
