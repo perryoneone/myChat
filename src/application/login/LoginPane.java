@@ -57,7 +57,7 @@ public class LoginPane extends Pane{
 		 * 登陆设置按钮事件
 		 */
 		setting.setOnAction((e) -> {
-			settingDialog(setting);
+			new HandleLogin().settingDialog(setting);
 		});
 		
 		//最小化按钮
@@ -143,7 +143,7 @@ public class LoginPane extends Pane{
 					toastr.show(level, 1000, "密码不能为空!");
 					password.requestFocus();
 				}else {
-					new HandleLogin((Stage)loginBtn.getScene().getWindow(),userName.getText(),password.getText());
+					new HandleLogin((Stage)loginBtn.getScene().getWindow(),loginBtn,userName.getText(),password.getText());
 				}
 				
 			} catch (Exception e) {
@@ -181,20 +181,5 @@ public class LoginPane extends Pane{
 		HBox.setMargin(erweima, new Insets(-5, 0, 0, 315));
 		
 		vb.getChildren().addAll(stack,nameBox,pwdBox,loginBox,regBox);
-	}
-	/**
-	 * 登陆设置对话框
-	 */
-	private void settingDialog(Button btn)
-	{
-		SettingDialog dlg = new SettingDialog(btn);
-		
-		// dlg.exec() 返回true或false
-		if(dlg.exec())
-		{
-			String ipAddr = dlg.ipAddr.getText();
-			String port = dlg.port.getText();
-			System.out.println(ipAddr + port);
-		}
 	}
 }

@@ -1,7 +1,11 @@
 package application.login;
 
+import java.util.regex.Pattern;
+
 import application.dialog.StyleDialog;
 import application.utils.Toast;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -17,6 +21,7 @@ public class SettingDialog extends StyleDialog
 {
 	Label label1 = new Label("ip地址：");
 	TextField ipAddr = new TextField();
+	
 	Label label2 = new Label("端口号：");
 	TextField port = new TextField();
 	Button buttonCancel  = new Button("取消");
@@ -30,9 +35,36 @@ public class SettingDialog extends StyleDialog
 		//布局
 		initLayout();
 		
+		/**
+		 * 文本框监听事件，用户只能输入数字
+		 */
+		ipAddr.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("[\\d*|\\.]")) { 
+					ipAddr.setText(newValue.replaceAll("[^\\d|\\.]", "")); 
+				} 
+				
+			}
+		});
+		
+		port.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\d*")) { 
+					port.setText(newValue.replaceAll("[^\\d]", "")); 
+				} 
+				
+			}
+		});
+		
 		// 点击确定按钮时，关闭对话框
 		buttonOK.setOnAction((e)->{
 			Toast toastr = new Toast(buttonOK.getScene().getWindow());
+			String ipRegex = "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}"; // ip地址正则
+			String portRegex = "^([0-9]|[1-9]\\d|[1-9]\\d{2}|[1-9]\\d{3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])$";
 			String ip = ipAddr.getText();
 			String portID = port.getText();
 			if(ip.equals("")) {
@@ -43,7 +75,17 @@ public class SettingDialog extends StyleDialog
 				Toast.Level level = Toast.Level.values()[1];
 				toastr.show(level, 1000, "端口号不能为空!");
 				port.requestFocus();
+			}else if(!Pattern.compile(ipRegex).matcher(ip).matches()) {
+				Toast.Level level = Toast.Level.values()[1];
+				toastr.show(level, 1000, "ip地址不合法!!");
+				ipAddr.requestFocus();
+			}else if(!Pattern.compile(portRegex).matcher(portID).matches()) {
+				Toast.Level level = Toast.Level.values()[1];
+				toastr.show(level, 1000, "端口号不合法!!");
+				port.requestFocus();
 			}else {
+				ipAddr.setUserData(ip);
+				port.setUserData(portID);
 				accept();
 			}	
 		});
@@ -67,7 +109,7 @@ public class SettingDialog extends StyleDialog
 		
 		HBox box1 = new HBox();
 		box1.setPrefSize(370, 50);
-		VBox.setMargin(box1, new Insets(10, 40, 0, 40));
+		VBox.setMargin(box1, new Insets(0, 40, 0, 25));
 		
 		label1.setAlignment(Pos.CENTER_RIGHT);
 		label1.setPrefSize(70, 20);
@@ -75,12 +117,16 @@ public class SettingDialog extends StyleDialog
 		HBox.setMargin(label1, new Insets(15, 0, 0, 0));
 		
 		ipAddr.setPrefSize(250, 35);
+		if(ipAddr.getUserData() != null) {
+			ipAddr.setText(ipAddr.getUserData().toString());
+		}
+		
 		HBox.setMargin(ipAddr, new Insets(8, 0, 0, 10));
 		box1.getChildren().addAll(label1, ipAddr);
 		
 		HBox box2 = new HBox();
 		box2.setPrefSize(370, 50);
-		VBox.setMargin(box2, new Insets(10, 40, 0, 40));
+		VBox.setMargin(box2, new Insets(10, 40, 0, 25));
 		
 		label2.setAlignment(Pos.CENTER_RIGHT);
 		label2.setPrefSize(70, 20);
@@ -88,6 +134,10 @@ public class SettingDialog extends StyleDialog
 		HBox.setMargin(label2, new Insets(15, 0, 0, 0));
 		
 		port.setPrefSize(250, 35);
+		if(port.getUserData() != null) {
+			port.setText(port.getUserData().toString());
+		}
+		
 		HBox.setMargin(port, new Insets(8, 0, 0, 10));
 		box2.getChildren().addAll(label2, port);
 		

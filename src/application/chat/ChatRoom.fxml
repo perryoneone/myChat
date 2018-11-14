@@ -98,8 +98,8 @@
       </HBox>
       <StackPane prefHeight="240.0" prefWidth="1300.0">
          <children>
-            <HTMLEditor fx:id="message" htmlText="" prefHeight="240.0" prefWidth="1300.0" />
-            <Button mnemonicParsing="false" onAction="#sendMsg" prefWidth="80.0" style="-fx-background-color: rgb(91,192,222);" text="发送" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
+            <HTMLEditor fx:id="message" focusTraversable="false" htmlText="" prefHeight="240.0" prefWidth="1300.0" />
+            <Button fx:id="sendBtn" mnemonicParsing="false" onAction="#sendMsg" prefWidth="80.0" style="-fx-background-color: rgb(91,192,222);" text="发送" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
                <StackPane.margin>
                   <Insets bottom="10.0" right="20.0" />
                </StackPane.margin>

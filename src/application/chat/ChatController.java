@@ -3,6 +3,7 @@ package application.chat;
 import java.util.regex.Pattern;
 
 import application.model.User;
+import application.utils.Toast;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,13 +26,27 @@ public class ChatController {
 	@FXML
 	HTMLEditor message;
 	@FXML
+	Button sendBtn;
+	@FXML
 	public void closeRoom() {
 		Stage stage = (Stage)closeBtn.getScene().getWindow();
 		stage.close();
 	}
 	@FXML
 	public void sendMsg() {
-		showMsg.appendText(htmlRemoveTag(message.getHtmlText()) + "\n");
+		Toast toast = new Toast(closeBtn.getScene().getWindow());
+		String msg = htmlRemoveTag(message.getHtmlText());
+		if(msg.equals("")) {
+			Toast.Level level = Toast.Level.values()[1];
+			toast.show(level, 1000, "消息不能为空！!");
+			message.requestFocus();
+		}else {
+			sendBtn.setFocusTraversable(false);
+			showMsg.appendText(msg + "\n");
+			message.setHtmlText("");
+			message.requestFocus();
+		}
+		
 	}
 	
 	
