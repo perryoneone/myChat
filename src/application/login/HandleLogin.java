@@ -10,6 +10,8 @@ import application.dao.UserDAO;
 import application.model.User;
 import application.utils.Toast;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class HandleLogin {
@@ -18,19 +20,18 @@ public class HandleLogin {
 	private ClientThread clientThread;
 	public HandleLogin() {
 	}
-    public HandleLogin(Stage stage,Button btn, String userName,String pwd) throws Exception {
+    public HandleLogin(Stage stage,Button btn, TextField userName,PasswordField pwd) throws Exception {
     	Toast toast = new Toast(stage);
-    	if(btn.getUserData() != null) {
-    		this.ipAddr = (String) ((Object[])btn.getUserData())[0];
-    		this.port = (int) ((Object[])btn.getUserData())[1];
-    		System.out.println(this.ipAddr + ":" + this.port);
-    	}
     	
-    	if(this.ipAddr == null || this.ipAddr.equals("") ) {
-    		this.settingDialog(btn);
+    	if(userName.getUserData() == null) {
+    		Toast.Level level = Toast.Level.values()[2];
+			toast.show(level, 1000, "请确认登陆设置！!");
     	}else {
+    		this.ipAddr = (String)userName.getUserData();
+        	this.port = Integer.parseInt((String)pwd.getUserData());
+        	System.out.println(this.ipAddr + ":" + this.port);
     		UserDAO userDAO = new UserDAO();
-        	User user = userDAO.findBy(userName, pwd);
+        	User user = userDAO.findBy(userName.getText(), pwd.getText());
         	if(user != null) {
     			Thread.sleep(2000);
     			clientThread = new ClientThread();
@@ -50,24 +51,24 @@ public class HandleLogin {
     /**
 	 * 登陆设置对话框
 	 */
-	public void settingDialog(Button btn)
-	{
-		SettingDialog dlg = new SettingDialog(btn);
-		
-		// dlg.exec() 返回true或false
-		if(dlg.exec())
-		{
-			Object[] obj2 = getSetting(dlg.ipAddr.getText(), Integer.parseInt(dlg.port.getText()));
-			btn.setUserData(obj2);
-		}
-	}
+//	public void settingDialog(Button btn)
+//	{
+//		SettingDialog dlg = new SettingDialog(btn);
+//		
+//		// dlg.exec() 返回true或false
+//		if(dlg.exec())
+//		{
+//			Object[] obj2 = getSetting(dlg.ipAddr.getText(), Integer.parseInt(dlg.port.getText()));
+//			btn.setUserData(obj2);
+//		}
+//	}
 	
-	public Object[] getSetting(String ip, int port) {
-		Object[] obj3 = {
-			ip,port
-		};
-		return obj3;
-	}
+//	public Object[] getSetting(String ip, int port) {
+//		Object[] obj3 = {
+//			ip,port
+//		};
+//		return obj3;
+//	}
 	
 	class ClientThread extends Thread {
 		
@@ -96,7 +97,6 @@ public class HandleLogin {
 			dos.flush();
 	//读取服务器返回的信息，判断是否登录成功
 			String response = dis.readUTF();
-
 	//登录失败
 			if (response.equals("FAIL")) {
 				addMsg("登录服务器失败");
