@@ -158,7 +158,7 @@ public class ServerController {
 				try {
 					// 读取客户端发送的报文
 					String msg = dis.readUTF();
-					/*String[] parts = msg.split("#");
+					String[] parts = msg.split("#");
 					switch (parts[0]) {
 					// 处理登录报文
 					case "LOGIN":
@@ -168,6 +168,7 @@ public class ServerController {
 							dos.writeUTF("FAIL");
 						} else {
 							dos.writeUTF("SUCCESS");
+							addMsg("用户"+loginUsername+"进入聊天室！");
 							// 将此客户端处理线程的信息添加到clientHandlerMap中
 							clientHandlerMap.put(loginUsername, this);
 							// 将现有用户的信息发给新用户
@@ -175,6 +176,7 @@ public class ServerController {
 							msgUserList.append("USERLIST#");
 							for (String username : clientHandlerMap.keySet()) {
 								msgUserList.append(username + "#");
+								System.out.println(username);
 							}
 							dos.writeUTF(msgUserList.toString());
 							// 将新登录的用户信息广播给其他用户
@@ -190,6 +192,7 @@ public class ServerController {
 					// 处理退出报文
 					case "LOGOUT":
 						clientHandlerMap.remove(username);
+						addMsg("用户"+username+"退出聊天室！");
 						String msgLogout = "LOGOUT#" + username;
 						broadcastMsg(username, msgLogout);
 						broadcastMsg(username, "LOGOUT#" + username);
@@ -212,7 +215,7 @@ public class ServerController {
 
 					default:
 						break;
-					}*/
+					}
 				} catch (IOException e) {
 					isConnected = false;
 					e.printStackTrace();

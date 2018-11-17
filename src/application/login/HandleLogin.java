@@ -4,6 +4,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.swing.JTextArea;
 
 import application.chat.ChatRoom;
 import application.dao.UserDAO;
@@ -18,8 +22,8 @@ public class HandleLogin {
 	private String ipAddr;
 	private int port;
 	private ClientThread clientThread;
-	public HandleLogin() {
-	}
+	private TextField userName;
+	
     public HandleLogin(Stage stage,Button btn, TextField userName,PasswordField pwd) throws Exception {
     	Toast toast = new Toast(stage);
     	
@@ -29,6 +33,7 @@ public class HandleLogin {
     	}else {
     		this.ipAddr = (String)userName.getUserData();
         	this.port = Integer.parseInt((String)pwd.getUserData());
+        	this.userName = userName;
         	System.out.println(this.ipAddr + ":" + this.port);
     		UserDAO userDAO = new UserDAO();
         	User user = userDAO.findBy(userName.getText(), pwd.getText());
@@ -37,7 +42,7 @@ public class HandleLogin {
     			clientThread = new ClientThread();
     			clientThread.start();
     			stage.close();
-    			ChatRoom room = new ChatRoom();
+    			ChatRoom room = new ChatRoom(clientThread,userName.getText());
                 room.showChat();
 				
         	}else {
@@ -49,7 +54,7 @@ public class HandleLogin {
     }
     
 	
-	class ClientThread extends Thread {
+	public class ClientThread extends Thread {
 		
 		// 通信套接字
 		private Socket socket;
@@ -70,7 +75,7 @@ public class HandleLogin {
 			dis = new DataInputStream(socket.getInputStream());
 			dos = new DataOutputStream(socket.getOutputStream());
 	//获取用户名，构建、发送登录报文
-			String username = "";
+			String username = userName.getText();
 			String msgLogin = "LOGIN#" + username;
 			dos.writeUTF(msgLogin);
 			dos.flush();
@@ -79,6 +84,7 @@ public class HandleLogin {
 	//登录失败
 			if (response.equals("FAIL")) {
 				addMsg("登录服务器失败");
+				System.out.println("登陆服务器失败");
 	//登录失败，断开连接，结束客户端线程
 				socket.close();
 				return;
@@ -121,6 +127,45 @@ public class HandleLogin {
 
 	//自动滚动到文本区的最后一行
 
+		}
+	}
+	
+	static //将消息报文的发送、接受封装在Utils工具类中
+	public class Utils {
+	//通过套接字S发送字符串
+		public static void sendMsg(Socket s, String msg) {
+			try {
+	//字符流
+				DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+				dos.writeUTF(msg);
+				dos.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	//在套接字S上读取字符串，如果TCP连接关闭，返回null
+		@SuppressWarnings("resource")
+		public static String recvMsg(Socket s) throws IOException {
+			String msg = null;
+			DataInputStream dis = (DataInputStream) new java.io.DataInputStream(s.getInputStream());
+			msg = ((java.io.DataInputStream) dis).readUTF();
+			return msg;
+
+		}
+
+	//获取格式化的当前时间字符串形式
+		public static String getTimeStr() {
+			SimpleDateFormat fm = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+
+			return fm.format(new Date());
+
+		}
+
+	//添加消息到文本记录框JTextArea ，并且滚动显示到最后一行
+		public static void addMsgRec(JTextArea textArea, String msg) {
+			textArea.append(msg + "\n");
+			textArea.setCaretPosition(textArea.getText().length());
 		}
 	}
 }

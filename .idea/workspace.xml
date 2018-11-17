@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="091318d4-fde8-47e1-bb79-ce3b6ea12328" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/login/LoginPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/login/LoginPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/login/doLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/login/HandleLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/chat/Chat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/chat/ChatRoom.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/chat/ChatRoom.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/chat/ChatRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/chat/ChatRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/login/HandleLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/login/HandleLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/ServerController.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,17 +24,18 @@
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.33" value="1" />
+          <entry key="project.open.time.36" value="1" />
           <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.82" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="css" value="3" />
-          <entry key="fxml" value="1" />
+          <entry key="fxml" value="2" />
           <entry key="iml" value="1" />
-          <entry key="java" value="3" />
+          <entry key="java" value="4" />
           <entry key="project" value="2" />
         </counts>
       </usages-collector>
@@ -40,8 +44,8 @@
           <entry key="CSS" value="3" />
           <entry key="Eclipse" value="2" />
           <entry key="IDEA_MODULE" value="1" />
-          <entry key="JAVA" value="3" />
-          <entry key="XML" value="1" />
+          <entry key="JAVA" value="4" />
+          <entry key="XML" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -59,8 +63,8 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/application/register/Register.fxml">
           <provider editor-type-id="JavaFX-Scene-Builder" />
           <provider selected="true" editor-type-id="text-editor">
@@ -74,6 +78,15 @@
                 <element signature="n#HBox#3;n#children#0;n#VBox#0;n#children#0;n#VBox#0;n#!!top" />
                 <element signature="n#HBox#6;n#children#0;n#VBox#0;n#children#0;n#VBox#0;n#!!top" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/application/chat/ChatController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="692">
+              <caret line="72" column="39" selection-start-line="72" selection-start-column="39" selection-end-line="72" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -101,12 +114,13 @@
         <option value="$PROJECT_DIR$/src/application/Main.java" />
         <option value="$PROJECT_DIR$/src/application/Login.java" />
         <option value="$PROJECT_DIR$/src/application/register/Register.fxml" />
+        <option value="$PROJECT_DIR$/src/application/chat/ChatRoom.fxml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="1923" />
+    <option name="y" value="1" />
     <option name="width" value="1936" />
     <option name="height" value="1062" />
   </component>
@@ -116,6 +130,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -139,6 +154,13 @@
               <item name="myChat" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="chat" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="myChat4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="myChat" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
               <item name="register" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -152,7 +174,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -229,9 +250,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="7" />
+    <frame x="1912" y="-8" width="1936" height="1066" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19189766" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18763326" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -275,6 +297,21 @@
     <entry file="file://$PROJECT_DIR$/.project">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/chat/ChatRoom.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="621">
+          <caret line="23" column="128" selection-start-line="23" selection-start-column="90" selection-end-line="23" selection-end-column="128" />
+          <folding>
+            <element signature="n#HBox#1;n#children#0;n#VBox#0;n#!!top" />
+            <element signature="n#StackPane#0;n#children#0;n#HBox#1;n#children#0;n#VBox#0;n#!!top" />
+            <element signature="n#VBox#0;n#children#0;n#HBox#1;n#children#0;n#VBox#0;n#!!top" />
+            <element signature="n#HBox#0;n#children#0;n#VBox#0;n#children#0;n#HBox#1;n#children#0;n#VBox#0;n#!!top" />
+            <element signature="n#StackPane#0;n#children#0;n#VBox#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/application/register/Register.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
@@ -288,6 +325,13 @@
             <element signature="n#HBox#3;n#children#0;n#VBox#0;n#children#0;n#VBox#0;n#!!top" />
             <element signature="n#HBox#6;n#children#0;n#VBox#0;n#children#0;n#VBox#0;n#!!top" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/chat/ChatController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="692">
+          <caret line="72" column="39" selection-start-line="72" selection-start-column="39" selection-end-line="72" selection-end-column="39" />
         </state>
       </provider>
     </entry>
