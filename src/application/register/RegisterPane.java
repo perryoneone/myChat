@@ -64,6 +64,7 @@ public class RegisterPane extends VBox{
 		label1.setAlignment(Pos.CENTER_RIGHT);
 		label1.setPrefSize(70, 20);
 		label1.setFont(new Font(14));
+		label1.requestFocus();
 		HBox.setMargin(label1, new Insets(15, 0, 0, 0));
 		
 		TextField name = new TextField();

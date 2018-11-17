@@ -48,27 +48,6 @@ public class HandleLogin {
     	
     }
     
-    /**
-	 * 登陆设置对话框
-	 */
-//	public void settingDialog(Button btn)
-//	{
-//		SettingDialog dlg = new SettingDialog(btn);
-//		
-//		// dlg.exec() 返回true或false
-//		if(dlg.exec())
-//		{
-//			Object[] obj2 = getSetting(dlg.ipAddr.getText(), Integer.parseInt(dlg.port.getText()));
-//			btn.setUserData(obj2);
-//		}
-//	}
-	
-//	public Object[] getSetting(String ip, int port) {
-//		Object[] obj3 = {
-//			ip,port
-//		};
-//		return obj3;
-//	}
 	
 	class ClientThread extends Thread {
 		

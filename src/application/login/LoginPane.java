@@ -110,6 +110,7 @@ public class LoginPane extends Pane{
 		userName = new TextField();
 		userName.setPrefSize(280, 40);
 		userName.setPromptText("账号");
+		userName.requestFocus();
 		userName.setTooltip(new Tooltip("请输入账号"));
 		
 		nameBox.getChildren().addAll(nameLabel,userName);

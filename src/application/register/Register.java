@@ -1,7 +1,9 @@
 package application.register;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -12,6 +14,10 @@ import javafx.stage.StageStyle;
  *
  */
 public class Register extends Application{
+	double x1;
+	double y1;
+	double x_stage;
+	double y_stage;
 	Stage stage = new Stage();
 	public static void main(String[] args) {
 		launch(args);
@@ -27,6 +33,30 @@ public class Register extends Application{
         scene.getStylesheets().add(getClass().getResource("register.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
+        
+      //设置窗口可拖动
+	scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
+		@Override
+		public void handle(MouseEvent m) {
+
+			// 计算
+			stage.setX(x_stage + m.getScreenX() - x1);
+			stage.setY(y_stage + m.getScreenY() - y1);
+
+		}
+	});
+	scene.setOnDragEntered(null);
+	scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent m) {
+			// 按下鼠标后，记录当前鼠标的坐标
+			x1 = m.getScreenX();
+			y1 = m.getScreenY();
+			x_stage = stage.getX();
+			y_stage = stage.getY();
+		}
+	});
 	}
 	
 	public void  showRegister() throws Exception {
