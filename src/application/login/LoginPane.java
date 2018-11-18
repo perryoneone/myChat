@@ -204,7 +204,6 @@ public class LoginPane extends Pane{
 		// dlg.exec() 返回true或false
 		if(dlg.exec())
 		{
-			System.out.println(dlg.ipAddr.getText() + "::" + Integer.parseInt(dlg.port.getText()));
 			userName.setUserData(dlg.ipAddr.getText());
 			password.setUserData(dlg.port.getText());
 		}
