@@ -7,6 +7,8 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import javafx.application.Platform;
@@ -14,6 +16,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -36,32 +39,24 @@ public class ServerController {
 
 	@FXML
 	TextArea log;
-	
+	@FXML
+	ListView<String> list;
 	@FXML
 	public void unchange() {
-		log.textProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				Platform.runLater(new Runnable() {
-					
-					@Override
-					public void run() {
-						log.setText(oldValue);
-					}
-				});
-			}
-		});
+		log.setEditable(false);
 	}
 	
 	@FXML
 	public void startServer() {
 		System.out.println("服务器启动中。。。");
 		// 创建、启动服务器通信线程
+		//Thread serverThread = new Thread(new ServerThread());
 		Thread serverThread = new Thread(new ServerThread());
 		serverThread.start();
 		start.setDisable(true);
 		stop.setDisable(false);
+		ipAddr.setEditable(false);
+		port.setEditable(false);
 		System.out.println("服务器启动成功");
 	}
 
@@ -76,6 +71,8 @@ public class ServerController {
 			clientHandlerMap.clear();
 			start.setDisable(false);
 			stop.setDisable(true);
+			ipAddr.setEditable(true);
+			port.setEditable(true);
 			log.appendText("服务器关闭成功！" + "\n");
 			System.out.println("服务器关闭成功！");
 		} catch (IOException e) {
@@ -168,7 +165,7 @@ public class ServerController {
 							dos.writeUTF("FAIL");
 						} else {
 							dos.writeUTF("SUCCESS");
-							addMsg("用户"+loginUsername+"进入聊天室！");
+							addMsg("用户"+loginUsername+"登陆成功，登陆时间：" + getTimeStr());
 							// 将此客户端处理线程的信息添加到clientHandlerMap中
 							clientHandlerMap.put(loginUsername, this);
 							// 将现有用户的信息发给新用户
@@ -192,10 +189,9 @@ public class ServerController {
 					// 处理退出报文
 					case "LOGOUT":
 						clientHandlerMap.remove(username);
-						addMsg("用户"+username+"退出聊天室！");
+						addMsg("用户"+username+"退出登陆，退出时间：" + getTimeStr());
 						String msgLogout = "LOGOUT#" + username;
 						broadcastMsg(username, msgLogout);
-						broadcastMsg(username, "LOGOUT#" + username);
 						isConnected = false;
 						socket.close();
 						updateUserTbl();
@@ -212,6 +208,7 @@ public class ServerController {
 							clientHandler.dos.writeUTF(msgTalkTo);
 							clientHandler.dos.flush();
 						}
+						break;
 
 					default:
 						break;
@@ -263,6 +260,12 @@ public class ServerController {
 		return null;
 	}
 	
-	
+	//获取格式化的当前时间字符串形式
+	public String getTimeStr() {
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+
+		return fm.format(new Date());
+
+	}
 
 }

@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="091318d4-fde8-47e1-bb79-ce3b6ea12328" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/chat/Chat.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/chat/ChatRoom.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/chat/ChatRoom.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/chat/ChatRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/chat/ChatRoom.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/login/HandleLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/login/HandleLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/ServerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/socket/Server2.java" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,14 +17,15 @@
     <session id="1574136788">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
+          <entry key="project.closed" value="7" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.33" value="1" />
+          <entry key="project.open.time.34" value="1" />
           <entry key="project.open.time.36" value="1" />
           <entry key="project.open.time.7" value="1" />
           <entry key="project.open.time.82" value="1" />
-          <entry key="project.opened" value="6" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -35,7 +33,7 @@
           <entry key="css" value="3" />
           <entry key="fxml" value="2" />
           <entry key="iml" value="1" />
-          <entry key="java" value="4" />
+          <entry key="java" value="8" />
           <entry key="project" value="2" />
         </counts>
       </usages-collector>
@@ -44,7 +42,7 @@
           <entry key="CSS" value="3" />
           <entry key="Eclipse" value="2" />
           <entry key="IDEA_MODULE" value="1" />
-          <entry key="JAVA" value="4" />
+          <entry key="JAVA" value="8" />
           <entry key="XML" value="2" />
         </counts>
       </usages-collector>
@@ -68,7 +66,7 @@
         <entry file="file://$PROJECT_DIR$/src/application/register/Register.fxml">
           <provider editor-type-id="JavaFX-Scene-Builder" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
+            <state relative-caret-position="1728">
               <caret line="154" column="53" selection-start-line="154" selection-start-column="53" selection-end-line="154" selection-end-column="53" />
               <folding>
                 <element signature="n#HBox#0;n#children#0;n#VBox#0;n#!!top" />
@@ -82,11 +80,34 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/application/chat/ChatController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="692">
               <caret line="72" column="39" selection-start-line="72" selection-start-column="39" selection-end-line="72" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/application/socket/Client.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-37" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/application/socket/Send.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-972" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/application/socket/Server.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="540">
+              <caret line="70" column="36" selection-start-line="70" selection-start-column="27" selection-end-line="70" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -118,7 +139,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="1923" />
     <option name="y" value="1" />
     <option name="width" value="1936" />
@@ -129,7 +150,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -170,14 +190,22 @@
               <item name="application" type="462c0819:PsiDirectoryNode" />
               <item name="res" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="myChat4" type="b2602c69:ProjectViewProjectNode" />
+              <item name="myChat" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="socket" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542027381090" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542544024181" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
@@ -250,9 +278,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1066" extended-state="7" />
+    <frame x="1912" y="-8" width="1936" height="1066" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18763326" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18976545" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -314,7 +342,7 @@
     <entry file="file://$PROJECT_DIR$/src/application/register/Register.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
+        <state relative-caret-position="1728">
           <caret line="154" column="53" selection-start-line="154" selection-start-column="53" selection-end-line="154" selection-end-column="53" />
           <folding>
             <element signature="n#HBox#0;n#children#0;n#VBox#0;n#!!top" />
@@ -331,6 +359,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="692">
           <caret line="72" column="39" selection-start-line="72" selection-start-column="39" selection-end-line="72" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/socket/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-37" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/socket/Send.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-972" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/socket/Server2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3088" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/application/socket/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="70" column="36" selection-start-line="70" selection-start-column="27" selection-end-line="70" selection-end-column="36" />
         </state>
       </provider>
     </entry>

@@ -53,17 +53,17 @@ public class HandleLogin {
     	}else {
     		this.ipAddr = (String)userName.getUserData();
         	this.port = Integer.parseInt((String)pwd.getUserData());
-        	this.userName = userName;
         	System.out.println(this.ipAddr + ":" + this.port);
     		UserDAO userDAO = new UserDAO();
         	User user = userDAO.findBy(userName.getText(), pwd.getText());
         	if(user != null) {
     			Thread.sleep(2000);
-    			clientThread = new ClientThread();
-    			clientThread.start();
     			stage.close();
-    			ChatRoom room = new ChatRoom();
+    			ChatRoom room = new ChatRoom(userName.getText());
                 room.showChat();
+    			clientThread = new ClientThread(userName.getText());
+    			clientThread.start();
+    			
 				
         	}else {
         		Toast.Level level = Toast.Level.values()[2];
@@ -78,8 +78,12 @@ public class HandleLogin {
     	double x_stage;
     	double y_stage;
     	Stage stage = new Stage();
+    	String userName;
     	public static void main(String[] args) {
     		launch(args);
+    	}
+    	public ChatRoom(String userName) {
+    		this.userName = userName;
     	}
 
     	@Override
@@ -96,7 +100,7 @@ public class HandleLogin {
     		box1.setPrefSize(1300, 60);
     		box1.setStyle("-fx-background-color: rgb(51,122,183); -fx-border-radius: 0.8;");
     		
-    		Label title = new Label("聊天室");
+    		Label title = new Label("聊天室[用户："+userName+"]");
     		title.setStyle("-fx-text-fill:#fff");
     		title.setFont(Font.font("微软雅黑", FontWeight.BOLD, 18));
     		HBox.setMargin(title, new Insets(15, 0, 0, 20));
@@ -105,14 +109,14 @@ public class HandleLogin {
     		closeBtn.setStyle("-fx-background-color: rgb(91,192,222);-fx-text-fill:white");
     		closeBtn.setFont(new Font(16));
     		closeBtn.setCursor(Cursor.HAND);
-    		HBox.setMargin(closeBtn, new Insets(12, 0, 0, 1160));
+    		HBox.setMargin(closeBtn, new Insets(12, 0, 0, 1060));
     		/**
     		 * 退出聊天室事件
     		 */
     		closeBtn.setOnAction((e) -> {
     			Stage stage = (Stage)closeBtn.getScene().getWindow();
     			stage.close();
-    			clientThread.logout(userName.getText());;
+    			clientThread.logout(userName);;
     		});
     		
     		box1.getChildren().addAll(title,closeBtn);
@@ -166,7 +170,7 @@ public class HandleLogin {
     		list.setPrefSize(358, 429);
     		list.setStyle("-fx-border-color: rgba(0,0,0,0);");
     		
-    		data.add(userName.getText());
+    		data.add(userName);
     		
     		list.setItems(data);
     		
@@ -298,6 +302,10 @@ public class HandleLogin {
 		//是否登录
 		private boolean isLogged;
 
+		private String userName;
+		public ClientThread(String userName) {
+			this.userName = userName;
+		}
 		/**
 		 * 连接服务器并登录
 		 */
@@ -308,7 +316,7 @@ public class HandleLogin {
 			dis = new DataInputStream(socket.getInputStream());
 			dos = new DataOutputStream(socket.getOutputStream());
 	//获取用户名，构建、发送登录报文
-			String username = userName.getText();
+			String username = userName;
 			String msgLogin = "LOGIN#" + username;
 			dos.writeUTF(msgLogin);
 			dos.flush();
@@ -316,7 +324,6 @@ public class HandleLogin {
 			String response = dis.readUTF();
 	//登录失败
 			if (response.equals("FAIL")) {
-				addMsg("登录服务器失败");
 				System.out.println("登陆服务器失败");
 	//登录失败，断开连接，结束客户端线程
 				socket.close();
@@ -324,7 +331,7 @@ public class HandleLogin {
 			}
 	//登录成功
 			else {
-				System.out.println("聊天室服务器登录成功");
+				addMsg("欢迎您进入聊天室！");
 				isLogged = true;
 				//btnConnect.setText("退出");
 				//btnSend.setEnabled(true);
@@ -340,6 +347,7 @@ public class HandleLogin {
 		//退出聊天室功能实现
 		public void logout(String username) {
 			try {
+				addMsg(username+ "退出了聊天室！");
 				Utils.sendMsg(socket, "LOGOUT#" + username);
 				//			String msgLongout="LOGOUT";
 				//dos.writeUTF(msgLogout);
@@ -349,7 +357,7 @@ public class HandleLogin {
 				//更新界面
 				//modelUsers.clear();
 				//listUsers.setModel(modelUsers);
-				addMsg("已经退出聊天室");
+				
 				//btnConnect.setText("登录");
 				//btnSend.setEnabled(false);
 
@@ -444,7 +452,7 @@ public class HandleLogin {
 //						break;
 					case "TALKTO_ALL":
 
-						addMsg(Utils.getTimeStr()+"\n" + parts[1] + " 跟所有人说：" + parts[2]);
+						addMsg(Utils.getTimeStr() + parts[1] + " 跟所有人说：" + parts[2]);
 						break;
 					case "TALKTO":
 
