@@ -305,10 +305,16 @@ public class ServerStart extends Application
 						updateUserTbl();
 						break;
 					case "TALKTO_ALL":
-						addMsg(Utils.getTimeStr() + " 【"+username + "】 跟所有人说：" + parts[1]);
-						String msgTalkToAll = "TALKTO_ALL#" + username + "#" + parts[1];
-						broadcastMsg(username, msgTalkToAll);
-
+						if(parts[2].equals("false")) {
+							System.out.println("用户消息");
+							addMsg(Utils.getTimeStr() + " 【"+username + "】 跟所有人说：" + parts[1]);
+							String msgTalkToAll = "TALKTO_ALL#" + username + "#" + parts[1] + "#" + parts[2];
+							broadcastMsg(username, msgTalkToAll);
+						}else if(parts[2].equals("true")){
+							System.out.println("系统消息");
+							String msgTalkToAll = "TALKTO_ALL#" + username + "#" + parts[1] + "#" + parts[2];
+							broadcastMsg(username, msgTalkToAll);
+						}
 						break;
 					case "TALKTO":
 						ClientHandler clientHandler = clientHandlerMap.get(parts[1]);

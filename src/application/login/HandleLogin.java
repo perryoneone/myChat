@@ -7,10 +7,8 @@ import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
-import javax.swing.JTextArea;
 import application.dao.UserDAO;
 import application.model.User;
-import application.server.ServerController;
 import application.utils.Toast;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -40,7 +38,6 @@ public class HandleLogin {
 	private String ipAddr;
 	private int port;
 	private static ClientThread clientThread;
-	private static TextField userName;
 	private static TextArea showMsg;
 	private static String msg;
 	
@@ -206,7 +203,6 @@ public class HandleLogin {
     				message.requestFocus();
     			}else {
     				sendBtn.setFocusTraversable(false);
-    				//clientThread.addMsg(msg);
     				if(null!=clientThread){
     					clientThread.sendChatMsg();//ClientThread中的sendChatMsg方法,发送消息
     				}
@@ -311,34 +307,36 @@ public class HandleLogin {
 		 */
 		private void login() throws IOException {
 
-	//连接服务器，获取套接字IO流
+			//连接服务器，获取套接字IO流
 			socket = new Socket(ipAddr, port);
 			dis = new DataInputStream(socket.getInputStream());
 			dos = new DataOutputStream(socket.getOutputStream());
-	//获取用户名，构建、发送登录报文
+			//获取用户名，构建、发送登录报文
 			String username = userName;
 			String msgLogin = "LOGIN#" + username;
 			dos.writeUTF(msgLogin);
 			dos.flush();
-	//读取服务器返回的信息，判断是否登录成功
+			//读取服务器返回的信息，判断是否登录成功
 			String response = dis.readUTF();
-	//登录失败
+			//登录失败
 			if (response.equals("FAIL")) {
 				System.out.println("登陆服务器失败");
-	//登录失败，断开连接，结束客户端线程
+				//登录失败，断开连接，结束客户端线程
 				socket.close();
 				return;
 			}
-	//登录成功
+			//登录成功
 			else {
 				addMsg("欢迎您进入聊天室！");
+				msg = username;
+				this.sendSysMsg(msg);;
 				isLogged = true;
 				//btnConnect.setText("退出");
 				//btnSend.setEnabled(true);
-	//更新Jlist列表信息
+				//更新Jlist列表信息
 				String[] self = { username };
 				//updateJList(listUsers, self, "ADD");
-	//获取在线人数
+				//获取在线人数
 				//lblRoomInfo.setText("目前在线人数" + listUsers.getModel().getSize() + "人");
 
 			}
@@ -373,12 +371,12 @@ public class HandleLogin {
 		}
 		
 		
-		//发送消息
+		//发送用户消息
 		public void sendChatMsg() {
 			String msgChat = null;
 			String dstUser = "所有人";
 //			if (rdbtnBrocast.isSelected()) {
-				msgChat = "TALKTO_ALL#" + msg;
+				msgChat = "TALKTO_ALL#" + msg + "#false";
 //			}
 //			if (rdbtnPrivateChat.isSelected()) {
 //				dstUser = (String) listUsers.getSelectedValue();
@@ -396,13 +394,22 @@ public class HandleLogin {
 			//			textAreaMsg.setText("");
 
 		}
+		
+		//发送系统消息
+		public void sendSysMsg(String msg) {
+			String msgChat = null;
+			msgChat = "TALKTO_ALL#" + msg + "#true";
+			//发送聊天报文到服务器
+			Utils.sendMsg(socket, msgChat);
+
+		}
 
 		
 
-	//线程主体
+		//线程主体
 		@Override
 		public void run() {
-	//连接服务器并登录
+			//连接服务器并登录
 			try {
 				login();
 			} catch (Exception e) {
@@ -414,10 +421,10 @@ public class HandleLogin {
 			while (isLogged) {
 				try {
 					String msg = dis.readUTF();
-// String msg=Utils.recvMsg(socket);
+					// String msg=Utils.recvMsg(socket);
 					String[] parts = msg.split("#");
 					switch (parts[0]) {
-// 处理服务器发来的用户列表报文
+					// 处理服务器发来的用户列表报文
 //					case "USERLIST":
 ////String[] users=new String[parts.length-1];
 ////	System.arraycopy(parts, 1, users, 0, parts.length-1);
@@ -443,8 +450,12 @@ public class HandleLogin {
 //						addMsg(Utils.getTimeStr() + " " + parts[1] + "退出聊室");
 //						break;
 					case "TALKTO_ALL":
-
-						addMsg(Utils.getTimeStr() + " 【"+parts[1] + "】 跟所有人说：\n" + parts[2]);
+						if(parts[3].equals("false")) {
+							addMsg(Utils.getTimeStr() + " 【"+parts[1] + "】 跟所有人说：\n" + parts[2]);
+						}else if(parts[3].equals("true")){
+							addMsg("【系统消息】 " + parts[1] + "进入了聊天室！");
+						}
+						
 						break;
 					case "TALKTO":
 
@@ -469,21 +480,19 @@ public class HandleLogin {
 		 * @param msg，要添加的消息
 		 */
 		public void addMsg(String msg) {
-	//在文本区中添加一条消息，并加上换行
-			
-			System.out.println("测试测试测试测试~~~~~~~~~~~~~~"+msg+"~~~~~~~~~~~~~~~~~~~~");
+			//在文本区中添加一条消息，并加上换行
 			showMsg.appendText(msg + "\n");
-	//自动滚动到文本区的最后一行
-
+			//自动滚动到文本区的最后一行
+			showMsg.positionCaret(showMsg.getText().length());
 		}
 	}
 	
-	static //将消息报文的发送、接受封装在Utils工具类中
-	public class Utils {
-	//通过套接字S发送字符串
+	//将消息报文的发送、接受封装在Utils工具类中
+	public static class Utils {
+		//通过套接字S发送字符串
 		public static void sendMsg(Socket s, String msg) {
 			try {
-	//字符流
+				//字符流
 				DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 				dos.writeUTF(msg);
 				dos.flush();
@@ -492,28 +501,22 @@ public class HandleLogin {
 			}
 		}
 
-	//在套接字S上读取字符串，如果TCP连接关闭，返回null
+		//在套接字S上读取字符串，如果TCP连接关闭，返回null
 		@SuppressWarnings("resource")
 		public static String recvMsg(Socket s) throws IOException {
 			String msg = null;
 			DataInputStream dis = (DataInputStream) new java.io.DataInputStream(s.getInputStream());
 			msg = ((java.io.DataInputStream) dis).readUTF();
 			return msg;
-
+	
 		}
 
-	//获取格式化的当前时间字符串形式
+		//获取格式化的当前时间字符串形式
 		public static String getTimeStr() {
 			SimpleDateFormat fm = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-
+	
 			return fm.format(new Date());
-
-		}
-
-	//添加消息到文本记录框JTextArea ，并且滚动显示到最后一行
-		public static void addMsgRec(JTextArea textArea, String msg) {
-			textArea.append(msg + "\n");
-			textArea.setCaretPosition(textArea.getText().length());
+	
 		}
 	}
 }
