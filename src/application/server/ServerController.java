@@ -10,10 +10,6 @@ import java.net.SocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -95,7 +91,7 @@ public class ServerController {
 				server.bind(socketAddress);
 				// 修改判断服务器是否运行的标识变量
 				isRunning = true;
-				addMsg("服务器启动成功");
+				addMsg("服务器启动成功！");
 			} catch (IOException e) {
 				// e.printStackTrace();
 				addMsg("服务器启动失败，请检查端口是否被占用");
@@ -171,6 +167,7 @@ public class ServerController {
 							// 将现有用户的信息发给新用户
 							StringBuffer msgUserList = new StringBuffer();
 							msgUserList.append("USERLIST#");
+							
 							for (String username : clientHandlerMap.keySet()) {
 								msgUserList.append(username + "#");
 								System.out.println(username);

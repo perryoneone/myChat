@@ -392,16 +392,8 @@ public class HandleLogin {
 			//发送聊天报文到服务器
 			Utils.sendMsg(socket, msgChat);
 			//添加到消息记录框
-			addMsg(Utils.getTimeStr() + " (我对" + dstUser + ")说：\n" + msg);
+			addMsg(Utils.getTimeStr() + " 【我】对" + dstUser + "说：\n" + msg);
 			//			textAreaMsg.setText("");
-			if (null != msgChat) {
-				try {
-					dos.writeUTF(msgChat);
-					dos.flush();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 
 		}
 
@@ -452,7 +444,7 @@ public class HandleLogin {
 //						break;
 					case "TALKTO_ALL":
 
-						addMsg(Utils.getTimeStr() + parts[1] + " 跟所有人说：" + parts[2]);
+						addMsg(Utils.getTimeStr() + " 【"+parts[1] + "】 跟所有人说：\n" + parts[2]);
 						break;
 					case "TALKTO":
 
