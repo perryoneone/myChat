@@ -283,7 +283,6 @@ public class ServerStart extends Application
 							// updateUserTbl();
 							// 存储登录的用户名
 							this.username = loginUsername;
-							updateUserTbl();
 						}
 						break;
 					// 处理退出报文
@@ -302,7 +301,6 @@ public class ServerStart extends Application
 						broadcastMsg(username, msgLogout);
 						isConnected = false;
 						socket.close();
-						updateUserTbl();
 						break;
 					case "TALKTO_ALL":
 						if(parts[2].equals("false")) {
@@ -363,11 +361,6 @@ public class ServerStart extends Application
 		
 		// 自动滚动到文本区的最后一行
 		log.positionCaret(log.getText().length());
-	}
-
-	public void updateUserTbl() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public Object getInetAddress() {

@@ -11,6 +11,7 @@ import application.dao.UserDAO;
 import application.model.User;
 import application.utils.Toast;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -40,6 +41,10 @@ public class HandleLogin {
 	private static ClientThread clientThread;
 	private static TextArea showMsg;
 	private static String msg;
+	private static ObservableList<String> data;
+	private static ListView<String> list;
+	private static Label userNum;
+	public static final String username = null;
 	
     public HandleLogin(Stage stage,Button btn, TextField userName,PasswordField pwd) throws Exception {
     	Toast toast = new Toast(stage);
@@ -155,21 +160,17 @@ public class HandleLogin {
     		lb1.setFont(new Font(14));
     		HBox.setMargin(lb1, new Insets(15, 0, 0, 10));
     		
-    		Label lb2 = new Label("1");
-    		lb2.setStyle("-fx-text-fill:red");
-    		lb2.setFont(new Font(14));
-    		HBox.setMargin(lb2, new Insets(15, 0, 0, 10));
+    		userNum = new Label();
+    		userNum.setStyle("-fx-text-fill:red");
+    		userNum.setFont(new Font(14));
+    		HBox.setMargin(userNum, new Insets(15, 0, 0, 10));
     		
-    		hb.getChildren().addAll(lb1,lb2);
+    		hb.getChildren().addAll(lb1,userNum);
     		
-    		ObservableList<String> data = FXCollections.observableArrayList();
-    		ListView<String> list = new ListView<String>(data);
+    		data = FXCollections.observableArrayList();
+    		list = new ListView<String>(data);
     		list.setPrefSize(358, 429);
     		list.setStyle("-fx-border-color: rgba(0,0,0,0);");
-    		
-    		data.add(userName);
-    		
-    		list.setItems(data);
     		
     		vb.getChildren().addAll(hb,list);
     		
@@ -328,15 +329,13 @@ public class HandleLogin {
 			//登录成功
 			else {
 				addMsg("欢迎您进入聊天室！");
-				msg = username;
-				this.sendSysMsg(msg);;
+				this.sendSysMsg("进入了聊天室！");
 				isLogged = true;
-				//btnConnect.setText("退出");
-				//btnSend.setEnabled(true);
 				//更新Jlist列表信息
 				String[] self = { username };
-				//updateJList(listUsers, self, "ADD");
+				updateUserList(list, self, "ADD");
 				//获取在线人数
+				userNum.setText(String.valueOf(data.size()));
 				//lblRoomInfo.setText("目前在线人数" + listUsers.getModel().getSize() + "人");
 
 			}
@@ -345,7 +344,7 @@ public class HandleLogin {
 		//退出聊天室功能实现
 		public void logout(String username) {
 			try {
-				addMsg(username+ "退出了聊天室！");
+				this.sendSysMsg("退出了聊天室！");
 				Utils.sendMsg(socket, "LOGOUT#" + username);
 				//			String msgLongout="LOGOUT";
 				//dos.writeUTF(msgLogout);
@@ -360,8 +359,9 @@ public class HandleLogin {
 				//btnSend.setEnabled(false);
 
 				String[] self = { username };
-				//updateJList(listUsers, self, "ADD");
-//获取在线人数
+				updateUserList(list, self, "ADD");
+				//获取在线人数
+				userNum.setText(String.valueOf(data.size()));
 				//lblRoomInfo.setText("目前在线人数" + listUsers.getModel().getSize() + "人");
 				socket.close();
 			} catch (IOException e) {
@@ -404,6 +404,27 @@ public class HandleLogin {
 
 		}
 
+		//更新用户列表
+		@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
+		public void updateUserList(ListView list, String[] items, String op) {
+			switch (op) {
+			case "ADD": // 添加新数据
+				for (int i = 0; i < items.length; i++) {
+					data.add(items[i]);
+					break;
+				}
+			case "DEL":// 删除数据
+				for (int i = 0; i < items.length; i++) {
+					data.remove(items[i]);
+					break;
+
+				}
+			default:
+				break;
+			}
+			list.setItems(data);// 更新数据
+
+		}
 		
 
 		//线程主体
@@ -424,36 +445,50 @@ public class HandleLogin {
 					// String msg=Utils.recvMsg(socket);
 					String[] parts = msg.split("#");
 					switch (parts[0]) {
-					// 处理服务器发来的用户列表报文
-//					case "USERLIST":
-////String[] users=new String[parts.length-1];
-////	System.arraycopy(parts, 1, users, 0, parts.length-1);
-////updateJList(listUsers, users, "ADD");
-//						String[] self = { username };
-//						updateJList(listUsers, self, "ADD");
-////获取在线人数
-//						lblRoomInfo.setText("目前在线人数" + listUsers.getModel().getSize() + "人");
-//						for (int i = 1; i < parts.length; i++) {
-//							modelUsers.addElement(parts[i]);
-//						}
-//						lblRoomInfo.setText("目前在线共" + listUsers.getModel().getSize() + "人");
-//						break;
-// 处理服务器发来的新用户登录表报文
-//					case "LOGIN":
-//						modelUsers.addElement(parts[1]);
-//						break;
-//					case "LOGOUT":
-//						modelUsers.removeElement(parts[1]);
-////String[] logoutUser={parts[1]};
-////updateJList(listUsers,logoutUser,"DEL");
-//						lblRoomInfo.setText("目前在线共" + listUsers.getModel().getSize() + "人");
-//						addMsg(Utils.getTimeStr() + " " + parts[1] + "退出聊室");
-//						break;
+					//处理服务器发来的用户列表报文
+					case "USERLIST":
+						//String[] users=new String[parts.length-1];
+						//	System.arraycopy(parts, 1, users, 0, parts.length-1);
+						//updateJList(listUsers, users, "ADD");
+						String[] self = { username };
+						updateUserList(list, self, "ADD");
+						//获取在线人数
+						userNum.setText(String.valueOf(data.size()));
+						//lblRoomInfo.setText("目前在线人数" + listUsers.getModel().getSize() + "人");
+						for (int i = 1; i < parts.length; i++) {
+							data.add(parts[i]);
+						}
+						userNum.setText(String.valueOf(data.size()));
+						//lblRoomInfo.setText("目前在线共" + listUsers.getModel().getSize() + "人");
+						break;
+					//处理服务器发来的新用户登录表报文
+					case "LOGIN":
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								data.add(parts[1]);	
+							}
+						});
+						
+						break;
+					case "LOGOUT":
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								data.remove(parts[1]);
+							}
+						});
+						
+						String[] logoutUser={parts[1]};
+						updateUserList(list,logoutUser,"DEL");
+						userNum.setText(String.valueOf(data.size()));
+						//lblRoomInfo.setText("目前在线共" + listUsers.getModel().getSize() + "人");
+						break;
 					case "TALKTO_ALL":
 						if(parts[3].equals("false")) {
 							addMsg(Utils.getTimeStr() + " 【"+parts[1] + "】 跟所有人说：\n" + parts[2]);
 						}else if(parts[3].equals("true")){
-							addMsg("【系统消息】 " + parts[1] + "进入了聊天室！");
+							addMsg("【系统消息】 " + parts[1] + parts[2]);
 						}
 						
 						break;
