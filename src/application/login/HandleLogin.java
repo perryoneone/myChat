@@ -26,6 +26,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -41,10 +42,16 @@ public class HandleLogin {
 	private static ClientThread clientThread;
 	private static TextArea showMsg;
 	private static String msg;
+	// 数据源
 	private static ObservableList<String> data;
+	// 创建ListView，指定数据项类型
 	private static ListView<String> list;
+	// 统计在线用户数量
 	private static Label userNum;
 	public static final String username = null;
+	public static String privateChatUser;
+	// 默认是群聊
+	private static boolean isPublic = true;
 	
     public HandleLogin(Stage stage,Button btn, TextField userName,PasswordField pwd) throws Exception {
     	Toast toast = new Toast(stage);
@@ -79,6 +86,7 @@ public class HandleLogin {
     	double y1;
     	double x_stage;
     	double y_stage;
+    	Label title;
     	Stage stage = new Stage();
     	String userName;
     	public static void main(String[] args) {
@@ -98,20 +106,25 @@ public class HandleLogin {
     		/**
     		 * 自定义窗口头部
     		 */
-    		HBox box1 = new HBox();
+    		AnchorPane box1 = new AnchorPane();
     		box1.setPrefSize(1300, 60);
     		box1.setStyle("-fx-background-color: rgb(51,122,183); -fx-border-radius: 0.8;");
     		
-    		Label title = new Label("聊天室[用户："+userName+"]");
+    		title = new Label();
+    		title.setText("聊天室[用户："+userName+"]");
     		title.setStyle("-fx-text-fill:#fff");
     		title.setFont(Font.font("微软雅黑", FontWeight.BOLD, 18));
-    		HBox.setMargin(title, new Insets(15, 0, 0, 20));
+    		AnchorPane.setTopAnchor(title, 15.0);
+    		AnchorPane.setLeftAnchor(title, 20.0);
+    		//HBox.setMargin(title, new Insets(15, 0, 0, 20));
     		
     		Button closeBtn = new Button("退出");
     		closeBtn.setStyle("-fx-background-color: rgb(91,192,222);-fx-text-fill:white");
     		closeBtn.setFont(new Font(16));
     		closeBtn.setCursor(Cursor.HAND);
-    		HBox.setMargin(closeBtn, new Insets(12, 0, 0, 1060));
+    		AnchorPane.setTopAnchor(closeBtn, 12.0);
+    		AnchorPane.setRightAnchor(closeBtn, 20.0);
+    		//HBox.setMargin(closeBtn, new Insets(12, 0, 0, 1060));
     		/**
     		 * 退出聊天室事件
     		 */
@@ -169,6 +182,23 @@ public class HandleLogin {
     		
     		data = FXCollections.observableArrayList();
     		list = new ListView<String>(data);
+    		list.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+				@Override
+				public void handle(MouseEvent click) {
+					if(click.getClickCount() == 2) {
+						privateChatUser = list.getSelectionModel().getSelectedItem();
+						if(!privateChatUser.equals(userName)) {
+							title.setText("聊天室[用户："+userName+"]--正在与"+privateChatUser+"私聊中...");
+							isPublic = false;
+						}else {
+							title.setText("聊天室[用户："+userName+"]");
+							isPublic = true;
+						}
+					}
+					
+				}
+			});
     		list.setPrefSize(358, 429);
     		list.setStyle("-fx-border-color: rgba(0,0,0,0);");
     		
@@ -298,7 +328,7 @@ public class HandleLogin {
 		private DataOutputStream dos;
 		//是否登录
 		private boolean isLogged;
-
+		//登陆用户名
 		private String userName;
 		public ClientThread(String userName) {
 			this.userName = userName;
@@ -335,9 +365,13 @@ public class HandleLogin {
 				String[] self = { username };
 				updateUserList(list, self, "ADD");
 				//获取在线人数
-				userNum.setText(String.valueOf(data.size()));
-				//lblRoomInfo.setText("目前在线人数" + listUsers.getModel().getSize() + "人");
-
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						userNum.setText(String.valueOf(data.size()));		
+					}
+				});
 			}
 		}
 		
@@ -375,18 +409,18 @@ public class HandleLogin {
 		public void sendChatMsg() {
 			String msgChat = null;
 			String dstUser = "所有人";
-//			if (rdbtnBrocast.isSelected()) {
+			if (isPublic) {
 				msgChat = "TALKTO_ALL#" + msg + "#false";
-//			}
-//			if (rdbtnPrivateChat.isSelected()) {
-//				dstUser = (String) listUsers.getSelectedValue();
+			}
+			else {
+				dstUser = privateChatUser;
 //				if (dstUser == null) {
 //					JOptionPane.showMessageDialog(this.frmtcp, "请选择需要私聊的用户!");
 //					return;
 //				}
-//				//String toUsername=(String)listUsers.getSelectedValue();
-//				msgChat = "TALKTO#" + dstUser + "#" + textAreaMsg.getText();
-//			}
+				//String toUsername=(String)listUsers.getSelectedValue();
+				msgChat = "TALKTO#" + dstUser + "#" + msg;
+			}
 			//发送聊天报文到服务器
 			Utils.sendMsg(socket, msgChat);
 			//添加到消息记录框
@@ -449,17 +483,29 @@ public class HandleLogin {
 					case "USERLIST":
 						//String[] users=new String[parts.length-1];
 						//	System.arraycopy(parts, 1, users, 0, parts.length-1);
-						//updateJList(listUsers, users, "ADD");
 						String[] self = { username };
 						updateUserList(list, self, "ADD");
 						//获取在线人数
-						userNum.setText(String.valueOf(data.size()));
-						//lblRoomInfo.setText("目前在线人数" + listUsers.getModel().getSize() + "人");
+						Platform.runLater(new Runnable() {
+							
+							@Override
+							public void run() {
+								userNum.setText(String.valueOf(data.size()));
+								
+							}
+						});
+						
 						for (int i = 1; i < parts.length; i++) {
 							data.add(parts[i]);
 						}
-						userNum.setText(String.valueOf(data.size()));
-						//lblRoomInfo.setText("目前在线共" + listUsers.getModel().getSize() + "人");
+						Platform.runLater(new Runnable() {
+							
+							@Override
+							public void run() {
+								userNum.setText(String.valueOf(data.size()));
+								
+							}
+						});
 						break;
 					//处理服务器发来的新用户登录表报文
 					case "LOGIN":
@@ -468,8 +514,7 @@ public class HandleLogin {
 							public void run() {
 								data.add(parts[1]);	
 							}
-						});
-						
+						});		
 						break;
 					case "LOGOUT":
 						Platform.runLater(new Runnable() {
@@ -477,12 +522,16 @@ public class HandleLogin {
 							public void run() {
 								data.remove(parts[1]);
 							}
+						});				
+						String[] logoutUser={parts[1]};
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								updateUserList(list,logoutUser,"DEL");
+								userNum.setText(String.valueOf(data.size()));
+							}
 						});
 						
-						String[] logoutUser={parts[1]};
-						updateUserList(list,logoutUser,"DEL");
-						userNum.setText(String.valueOf(data.size()));
-						//lblRoomInfo.setText("目前在线共" + listUsers.getModel().getSize() + "人");
 						break;
 					case "TALKTO_ALL":
 						if(parts[3].equals("false")) {
@@ -494,7 +543,7 @@ public class HandleLogin {
 						break;
 					case "TALKTO":
 
-						addMsg(Utils.getTimeStr() + parts[1] + " 跟我说：" + parts[2]);
+						addMsg(Utils.getTimeStr()+ " 【" + parts[1] + "】 跟我说：" + parts[2]);
 						break;
 
 					default:
