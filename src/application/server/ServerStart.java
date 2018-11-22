@@ -235,11 +235,6 @@ public class ServerStart extends Application
 			}
 		}
 
-		public Object getInetAddress() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
 		@Override
 		public void run() {
 			while (isRunning && isConnected) {
@@ -264,7 +259,6 @@ public class ServerStart extends Application
 									
 								}
 							});
-							
 							// 将此客户端处理线程的信息添加到clientHandlerMap中
 							clientHandlerMap.put(loginUsername, this);
 							// 将现有用户的信息发给新用户
@@ -273,14 +267,11 @@ public class ServerStart extends Application
 							
 							for (String username : clientHandlerMap.keySet()) {
 								msgUserList.append(username + "#");
-								System.out.println(username);
 							}
 							dos.writeUTF(msgUserList.toString());
 							// 将新登录的用户信息广播给其他用户
 							String msgLogin = "LOGIN#" + loginUsername;
-
 							broadcastMsg(loginUsername, msgLogin);
-							// updateUserTbl();
 							// 存储登录的用户名
 							this.username = loginUsername;
 						}
@@ -351,7 +342,7 @@ public class ServerStart extends Application
 	}
 
 	/**
-	 * 添加消息到文本框textAreaRecord
+	 * 添加消息到文本框
 	 * 
 	 * @param msg，要添加的消息
 	 */
@@ -363,11 +354,6 @@ public class ServerStart extends Application
 		log.positionCaret(log.getText().length());
 	}
 
-	public Object getInetAddress() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	//获取格式化的当前时间字符串形式
 	public String getTimeStr() {
 		SimpleDateFormat fm = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
@@ -375,5 +361,4 @@ public class ServerStart extends Application
 		return fm.format(new Date());
 
 	}
-
 }

@@ -380,18 +380,7 @@ public class HandleLogin {
 			try {
 				this.sendSysMsg("退出了聊天室！");
 				Utils.sendMsg(socket, "LOGOUT#" + username);
-				//			String msgLongout="LOGOUT";
-				//dos.writeUTF(msgLogout);
-				//dos.flush();
 				isLogged=false;
-				
-				//更新界面
-				//modelUsers.clear();
-				//listUsers.setModel(modelUsers);
-				
-				//btnConnect.setText("登录");
-				//btnSend.setEnabled(false);
-
 				String[] self = { username };
 				updateUserList(list, self, "ADD");
 				//获取在线人数
@@ -414,19 +403,12 @@ public class HandleLogin {
 			}
 			else {
 				dstUser = privateChatUser;
-//				if (dstUser == null) {
-//					JOptionPane.showMessageDialog(this.frmtcp, "请选择需要私聊的用户!");
-//					return;
-//				}
-				//String toUsername=(String)listUsers.getSelectedValue();
 				msgChat = "TALKTO#" + dstUser + "#" + msg;
 			}
 			//发送聊天报文到服务器
 			Utils.sendMsg(socket, msgChat);
 			//添加到消息记录框
 			addMsg(Utils.getTimeStr() + " 【我】对" + dstUser + "说：\n" + msg);
-			//			textAreaMsg.setText("");
-
 		}
 		
 		//发送系统消息
@@ -472,7 +454,6 @@ public class HandleLogin {
 				e.printStackTrace();
 				return;
 			}
-			
 			while (isLogged) {
 				try {
 					String msg = dis.readUTF();
@@ -481,17 +462,13 @@ public class HandleLogin {
 					switch (parts[0]) {
 					//处理服务器发来的用户列表报文
 					case "USERLIST":
-						//String[] users=new String[parts.length-1];
-						//	System.arraycopy(parts, 1, users, 0, parts.length-1);
 						String[] self = { username };
 						updateUserList(list, self, "ADD");
 						//获取在线人数
 						Platform.runLater(new Runnable() {
-							
 							@Override
 							public void run() {
 								userNum.setText(String.valueOf(data.size()));
-								
 							}
 						});
 						
@@ -499,13 +476,13 @@ public class HandleLogin {
 							data.add(parts[i]);
 						}
 						Platform.runLater(new Runnable() {
-							
 							@Override
 							public void run() {
-								userNum.setText(String.valueOf(data.size()));
-								
+								userNum.setText(String.valueOf(data.size()));	
 							}
 						});
+						System.out.println("USERLIST");
+						System.out.println(data.size());
 						break;
 					//处理服务器发来的新用户登录表报文
 					case "LOGIN":
@@ -513,6 +490,7 @@ public class HandleLogin {
 							@Override
 							public void run() {
 								data.add(parts[1]);	
+								userNum.setText(String.valueOf(data.size()));	
 							}
 						});		
 						break;
@@ -531,7 +509,6 @@ public class HandleLogin {
 								userNum.setText(String.valueOf(data.size()));
 							}
 						});
-						
 						break;
 					case "TALKTO_ALL":
 						if(parts[3].equals("false")) {
@@ -539,18 +516,16 @@ public class HandleLogin {
 						}else if(parts[3].equals("true")){
 							addMsg("【系统消息】 " + parts[1] + parts[2]);
 						}
-						
 						break;
 					case "TALKTO":
 
 						addMsg(Utils.getTimeStr()+ " 【" + parts[1] + "】 跟我说：" + parts[2]);
 						break;
-
 					default:
 						break;
 					}
 				} catch (IOException e) {
-// TODO 处理异常
+					// TODO 处理异常
 					isLogged = false;
 					e.printStackTrace();
 				}
@@ -558,8 +533,8 @@ public class HandleLogin {
 		}
 
 		/**
-		 * 添加消息到文本框textAreaRecord
-		 * @param showMsg 
+		 * 添加消息到文本框
+		 * 
 		 * 
 		 * @param msg，要添加的消息
 		 */
