@@ -1,10 +1,9 @@
-package application.login;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+package application.client;
 /**
  * 登陆界面布局容器
  */
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -22,11 +21,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
 import java.util.regex.Pattern;
-
 import application.dialog.StyleDialog;
-import application.register.Register;
 import application.utils.Toast;
 
 public class LoginPane extends Pane{

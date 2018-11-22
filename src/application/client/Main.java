@@ -1,4 +1,4 @@
-package application.login;
+package application.client;
 
 /**
  * 聊天室主界面

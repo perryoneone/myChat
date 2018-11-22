@@ -1,4 +1,4 @@
-package application.register;
+package application.client;
 /**
  * 注册界面布局容器
  */

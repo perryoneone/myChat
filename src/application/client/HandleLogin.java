@@ -1,4 +1,4 @@
-package application.login;
+package application.client;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

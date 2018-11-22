@@ -1,4 +1,4 @@
-package application.register;
+package application.client;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;

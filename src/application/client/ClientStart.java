@@ -1,4 +1,4 @@
-package application.login;
+package application.client;
 	
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
-public class Login extends Application {
+public class ClientStart extends Application {
 	double x1;
 	double y1;
 	double x_stage;

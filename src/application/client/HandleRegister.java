@@ -1,4 +1,4 @@
-package application.register;
+package application.client;
 
 import application.dao.UserDAO;
 import application.model.User;
